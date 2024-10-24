@@ -1,17 +1,15 @@
-import axios from 'axios'
-import {GetProductsResponse} from "@/app/api/types";
-import {Product} from "@/types";
+import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://fakestoreapi.com/',
-    withCredentials: true,
-})
+  baseURL: "https://fakestoreapi.com/",
+  withCredentials: true,
+});
 
 export const productsAPI = {
-    getProducts() {
-        return instance.get<any>(`products`)
-    },
-    /*deleteProduct(arg: DeleteTaskArg) {
+  getProducts() {
+    return instance.get<any>(`products`);
+  },
+  /*deleteProduct(arg: DeleteTaskArg) {
         return instance.delete<Response>(`todo-lists/${arg.todolistId}/tasks/${arg.taskId}`)
     },
     createTask(arg: AddTaskArg) {
@@ -22,4 +20,4 @@ export const productsAPI = {
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<Response<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },*/
-}
+};
