@@ -1,16 +1,24 @@
-'use client'
+"use client";
 
+import { ProductType } from "@/types";
 import Link from "next/link";
 
-const Product = ({ product }) => {
-    return (
-        <div>
-            <Link href='/'>Назад</Link><br/>
-            <h1>{product.title}</h1>
-            <p>{product.description}</p>
-            <p>Цена: {product.price}</p>
-        </div>
-    );
+// Product это сущность, которая должна принимать не сам продукт, а только пропсы
+// которые она отобразит, поэтому деструктуризация должна быть в таких компонентах
+
+const Product = ({ title, description, price }: ProductType) => {
+  return (
+    <div>
+      {/* Если компонент называется product, в нем не должно быть никакой инфы 
+            по мимо продукта, т.е кнопку назад нужно вынести в отдельный 
+            компонент. И стараться декомпозировать практически все */}
+      <Link href="/">Назад</Link>
+      <br />
+      <h1>{title}</h1>
+      <p>{description}</p>
+      <p>Цена: {price}</p>
+    </div>
+  );
 };
 
 export default Product;
