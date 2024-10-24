@@ -4,6 +4,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 //import { Product } from '../../../types'
 import { ProductType } from '@/types'
 import Product from "@/app/components/Product";
+import {logAppDirError} from "next/dist/server/dev/log-app-dir-error";
 
 type Props = {
     product: ProductType;
@@ -33,7 +34,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 };
 
 const PageProduct: React.FC<Props> = ({ product }) => {
-
     if (!product) {
         return <div>Загрузка...</div>;
     }
