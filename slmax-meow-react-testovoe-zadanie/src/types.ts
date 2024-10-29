@@ -3,9 +3,9 @@ export type ProductType = {
     title: string,
     price: number,
     image: string,
-    description: string,
-    category: string,
-    rating: {
+    description?: string,
+    category?: string,
+    rating?: {
         rate: number,
         count: number,
     },

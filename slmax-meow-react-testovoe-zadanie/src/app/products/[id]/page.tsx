@@ -1,13 +1,14 @@
+"use client"
 // pages/products/page.tsx
-import axios from "axios";
 //import { Product } from '../../../types'
-import { ProductType } from "@/types";
+import {ProductType} from "@/types";
 import Product from "@/app/components/Product";
-import { logAppDirError } from "next/dist/server/dev/log-app-dir-error";
+import {productsAPI} from "@/app/api/api";
+import {useState} from "react";
 
 type Props = {
-  product: ProductType;
-  params: { id: string };
+    product: ProductType;
+    params: { id: string };
 };
 
 // export const getStaticPaths: GetStaticPaths = async () => {
@@ -33,21 +34,43 @@ type Props = {
 //     };
 // };
 
-const fetchData = (id: string) =>
-  fetch(`https://fakestoreapi.com/products/${id}`).then((res) => res.json());
+// const fetchData = (id: string) =>
+//     fetch(`https://fakestoreapi.com/products/${id}`).then((res) => res.json());
 
 const PageProduct: React.FC<Props> = async ({
-  params: { id },
-}: {
-  params: { id: string };
+  params: {id},
+  }: {
+    params: { id: string };
 }) => {
-  const product: ProductType = await fetchData(id);
 
-  if (!product) {
-    return <div>Загрузка...</div>;
-  }
 
-  return <Product {...product} />;
+    const product: ProductType = await productsAPI.getProduct(id)
+
+    let {title, description, price, image} = product
+
+    // const [_title, setTitle] = useState(title)
+    // const [_image, setImage] = useState(image)
+    // const [_description, setDescription] = useState(description)
+    // const [_price, setPrice] = useState(price)
+    //
+    // const changeProductHandler = (_title: string) => {
+    //     let model: ProductType = {
+    //         id,
+    //         title: _title,
+    //         description: _description,
+    //         price: _price,
+    //         image: _image,
+    //     }
+    //     productsAPI.updateProduct(id, model)
+    // }
+
+
+    if (!product) {
+        return <div>Загрузка...</div>;
+    }
+
+    // return <Product {...product} />;
+    return <Product product={product} />;
 };
 
 export default PageProduct;

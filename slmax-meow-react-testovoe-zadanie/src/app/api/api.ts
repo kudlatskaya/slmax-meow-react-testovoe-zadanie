@@ -1,23 +1,30 @@
-import axios from "axios";
+import axios from 'axios'
+//import {GetProductsResponse} from "@/app/api/types";
+import { ProductType} from "@/types";
 
 const instance = axios.create({
-  baseURL: "https://fakestoreapi.com/",
+  baseURL: 'https://fakestoreapi.com/',
   withCredentials: true,
-});
+})
 
 export const productsAPI = {
   getProducts() {
-    return instance.get<any>(`products`);
+    return fetch("https://fakestoreapi.com/products").then((res) => res.json());
   },
-  /*deleteProduct(arg: DeleteTaskArg) {
-        return instance.delete<Response>(`todo-lists/${arg.todolistId}/tasks/${arg.taskId}`)
-    },
-    createTask(arg: AddTaskArg) {
-        return instance.post<Response<{ item: TaskType }>>(`todo-lists/${arg.todolistId}/tasks`, {
-            title: arg.title,
-        })
-    },
-    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<Response<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
-    },*/
-};
+  getProduct(productId: string) {
+    return fetch(`https://fakestoreapi.com/products/${productId}`).then((res) => res.json());
+  },
+  deleteProduct(productId: string) {
+    return instance.delete<ProductType>(`products/${productId}`)
+  },
+  createProduct( model: ProductType) {
+    return instance.post<ProductType>(`products}`, model)
+  },
+  updateProduct(productId: number, model: ProductType) {
+    return fetch(`https://fakestoreapi.com/products/${productId}`,{
+      method:"PUT",
+      body:JSON.stringify(model)
+    })
+        .then(res=>res.json())
+  },
+}
