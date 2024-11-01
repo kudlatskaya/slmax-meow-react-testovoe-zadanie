@@ -21,34 +21,32 @@ const Product: React.FC<ProductType> = ({title, description, price, image}: Prod
 
     const router = useRouter()
 
-    // const showForm = () => {
-    //     return <Form />
-    // }
 
     return (
-        <div>
-            {/* Если компонент называется product, в нем не должно быть никакой инфы
+        <>
+            {modalActive
+                ? <div>
+                    {/* Если компонент называется product, в нем не должно быть никакой инфы
             по мимо продукта, т.е кнопку назад нужно вынести в отдельный 
             компонент. И стараться декомпозировать практически все */}
-            <div className={`${s.buttonContainer} m-6`}>
-                <Button title={''} callBack={() => router.push('/')}><ArrowLeft/></Button>
-                <Button title={''} callBack={() => setModalActive(true)}><PencilSquare/></Button>
-                <Form active={modalActive} setActive={setModalActive}/>
-            </div>
+                    <div className={`${s.buttonContainer} m-6`}>
+                        <Button title={''} callBack={() => router.push('/')}><ArrowLeft/></Button>
+                        <Button title={''} callBack={() => setModalActive(true)}><PencilSquare/></Button>
+                    </div>
+                    <div className="bg-white">
+                        <div className="pt-6">
 
+                            {/* Image gallery */}
+                            <Gallery image={image}/>
 
-            <div className="bg-white">
-                <div className="pt-6">
-
-                    {/* Image gallery */}
-                    <Gallery image={image}/>
-
-                    {/* Product info */}
-                    <ProductInfo title={title} price={price} description={description}/>
+                            {/* Product info */}
+                            <ProductInfo title={title} price={price} description={description}/>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-        </div>
+                : <Form active={modalActive} setActive={setModalActive}/>
+            }
+        </>
     );
 };
 

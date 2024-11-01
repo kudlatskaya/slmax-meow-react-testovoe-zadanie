@@ -1,7 +1,9 @@
-import type {Config} from "tailwindcss";
+import plugin from "tailwindcss";
 
 const config: {
-    plugins: { handler: () => void }[];
+    plugins: ({ handler: () => void } | plugin | ((options?: Partial<{ strategy: "base" | "class" }>) => {
+        handler: () => void
+    }))[];
     theme: {
         extend: { gridTemplateRows: { "[auto,auto,1fr]": string }; colors: { background: string; foreground: string } }
     };
@@ -23,7 +25,10 @@ const config: {
             },
         },
     },
-    plugins: [require('@tailwindcss/aspect-ratio'),],
+    plugins: [
+        require('@tailwindcss/aspect-ratio'),
+        require('@tailwindcss/forms'),
+    ],
 };
 
 export default config;
