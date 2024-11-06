@@ -16,19 +16,14 @@ import Form from "@/app/components/form/Form";
 // которые она отобразит, поэтому деструктуризация должна быть в таких компонентах
 
 
-const Product: React.FC<ProductType> = ({title, description, price, image}: ProductType) => {
-    const [modalActive, setModalActive] = useState(false);
-
+const Product: React.FC<ProductType> = ({ title, description, price, image }: ProductType) => {
+    const [modalActive, setModalActive] = useState(true);
     const router = useRouter()
-
 
     return (
         <>
-            {modalActive
+            {!modalActive
                 ? <div>
-                    {/* Если компонент называется product, в нем не должно быть никакой инфы
-            по мимо продукта, т.е кнопку назад нужно вынести в отдельный 
-            компонент. И стараться декомпозировать практически все */}
                     <div className={`${s.buttonContainer} m-6`}>
                         <Button title={''} callBack={() => router.push('/')}><ArrowLeft/></Button>
                         <Button title={''} callBack={() => setModalActive(true)}><PencilSquare/></Button>

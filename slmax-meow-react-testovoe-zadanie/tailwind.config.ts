@@ -1,14 +1,6 @@
-import plugin from "tailwindcss";
 
-const config: {
-    plugins: ({ handler: () => void } | plugin | ((options?: Partial<{ strategy: "base" | "class" }>) => {
-        handler: () => void
-    }))[];
-    theme: {
-        extend: { gridTemplateRows: { "[auto,auto,1fr]": string }; colors: { background: string; foreground: string } }
-    };
-    content: string[]
-} = {
+
+const config = {
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",

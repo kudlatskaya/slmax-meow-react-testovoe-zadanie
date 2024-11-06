@@ -3,15 +3,12 @@ import s from '../../styles/Button.module.css'
 type Props = {
     title: string,
     callBack: () => void,
+    className?: string,
     disabled?: boolean,
     children?: React.ReactElement
 }
 
-const Button = ({title, callBack, disabled, children}: Props) => {
-
-    const className = title
-        ? "bg-transparent hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-        : s.button
+const Button = ({title, callBack, disabled, className, children}: Props) => {
 
     const onClickHandler = () => {
         callBack();
@@ -20,7 +17,7 @@ const Button = ({title, callBack, disabled, children}: Props) => {
     return (
         <div >
             <button
-                className={className}
+                className={title ? className : s.button}
                 onClick={onClickHandler}
                 disabled={disabled}>{title || children}</button>
         </div>

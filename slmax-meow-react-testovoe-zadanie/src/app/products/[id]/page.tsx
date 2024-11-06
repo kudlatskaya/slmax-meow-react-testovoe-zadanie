@@ -1,14 +1,6 @@
-"use client"
-
 import {ProductType} from "@/types";
 import Product from "@/app/components/product/Product";
 import {productsAPI} from "@/app/api/api";
-
-type Props = {
-    product: ProductType;
-    params: { id: string };
-};
-
 
 const PageProduct: ({params: {id}}: { params: { id: string } }) => Promise<JSX.Element> = async ({
   params: {id},
