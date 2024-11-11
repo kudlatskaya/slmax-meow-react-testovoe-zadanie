@@ -14,7 +14,7 @@ const PageProduct: ({params: {id}}: { params: { id: string } }) => Promise<JSX.E
         return <div>Загрузка...</div>;
     }
 
-     return <Product {...product} />;
+     return <Product product={product} />;
 };
 
 export default PageProduct;

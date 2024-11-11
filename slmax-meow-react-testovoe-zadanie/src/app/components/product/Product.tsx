@@ -16,9 +16,12 @@ import Form from "@/app/components/form/Form";
 // которые она отобразит, поэтому деструктуризация должна быть в таких компонентах
 
 
-const Product: React.FC<ProductType> = ({ title, description, price, image }: ProductType) => {
-    const [modalActive, setModalActive] = useState(true);
+const Product: React.FC<ProductType> = ( { product} : ProductType) => {
+    const {title, description, price, image} = product
+    const [modalActive, setModalActive] = useState(false);
     const router = useRouter()
+
+
 
     return (
         <>
@@ -39,7 +42,7 @@ const Product: React.FC<ProductType> = ({ title, description, price, image }: Pr
                         </div>
                     </div>
                 </div>
-                : <Form active={modalActive} setActive={setModalActive}/>
+                : <Form data={product} active={modalActive} setActive={setModalActive}/>
             }
         </>
     );

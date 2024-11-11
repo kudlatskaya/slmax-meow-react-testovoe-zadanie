@@ -1,13 +1,41 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import XMark from "@/assets/icons/X-mark";
 import Button from "@/app/components/form/Button";
 import Input from "@/app/components/form/Input";
+import {productsAPI} from "@/app/api/api";
+import {useForm} from "react-hook-form";
+import {FormValues} from "./validation"
+import {ProductType} from "@/types";
 
-const Form = ({active, setActive}: { active: boolean, setActive: (active: boolean) => void }) => {
+const Form = ({active, setActive, data}: {
+    active: boolean,
+    setActive: (active: boolean) => void,
+    data: ProductType
+}) => {
+
+    const {register, handleSubmit, getValues} = useForm<FormValues>({
+        defaultValues: {
+            title: data.title,
+            price: data.price,
+            image: data.image,
+            description: data.description,
+            category: data.category,
+            rate: data.rating?.rate,
+            count: data.rating?.count,
+        },
+        // resolver: zodResolver(loginSchema),
+    });
 
     const closeModel = () => {
         setActive(false)
     }
+
+    const onSubmit = useCallback(() => {
+        // const productData = getValues();
+        productsAPI.updateProduct(data.id, data)
+        setActive(false)
+        console.log(getValues());
+    }, [getValues]);
 
     return (
         <>
@@ -31,10 +59,11 @@ const Form = ({active, setActive}: { active: boolean, setActive: (active: boolea
                     </div>
 
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form action="#" method="POST" className="space-y-6">
+                        <form action="#" method="POST" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
                             <Input label={"Product name"}
-                                   id={"name"}
-                                   name={"name"}
+                                   id={"title"}
+                                   {...register("title")}
                                    type={"text"}
                                    required={true}
                                    autoComplete={"name"}
@@ -44,7 +73,7 @@ const Form = ({active, setActive}: { active: boolean, setActive: (active: boolea
 
                             <Input label={"Product image"}
                                    id={"file"}
-                                   name={"file"}
+                                   {...register("image")}
                                    type={"file"}
                                    required={true}
                                    inputClassName={"block w-full  py-1.5 text-gray-900   placeholder:text-gray-400  sm:text-sm/6"}
