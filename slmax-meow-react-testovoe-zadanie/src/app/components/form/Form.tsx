@@ -4,16 +4,18 @@ import Button from "@/app/components/form/Button";
 import Input from "@/app/components/form/Input";
 import {productsAPI} from "@/app/api/api";
 import {useForm} from "react-hook-form";
-import {FormValues} from "./validation"
+import {FormValues, loginSchema} from "./validation"
 import {ProductType} from "@/types";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-const Form = ({active, setActive, data}: {
+const Form = ({active, setActive, data, setData}: {
     active: boolean,
     setActive: (active: boolean) => void,
-    data: ProductType
+    data: ProductType,
+    setData: (data: ProductType) => void,
 }) => {
 
-    const {register, handleSubmit, getValues} = useForm<FormValues>({
+    const {register, handleSubmit, getValues} = useForm<FormValues & ProductType>({
         defaultValues: {
             title: data.title,
             price: data.price,
@@ -23,18 +25,20 @@ const Form = ({active, setActive, data}: {
             rate: data.rating?.rate,
             count: data.rating?.count,
         },
-        // resolver: zodResolver(loginSchema),
+        resolver: zodResolver(loginSchema),
     });
-
+    console.log('Product')
     const closeModel = () => {
         setActive(false)
     }
 
-    const onSubmit = useCallback(() => {
-        // const productData = getValues();
-        productsAPI.updateProduct(data.id, data)
+    const onSubmit = useCallback(async () => {
+        const productData = getValues();
+        setData(productData)
+        // productsAPI.updateProduct(productData.id, productData)
+        // let product: ProductType = await productsAPI.getProduct(productData.id)
         setActive(false)
-        console.log(getValues());
+        // console.log(productData)
     }, [getValues]);
 
     return (
@@ -55,7 +59,6 @@ const Form = ({active, setActive, data}: {
                                 Change the product information
                             </h2>
                         </div>
-
                     </div>
 
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -82,7 +85,7 @@ const Form = ({active, setActive, data}: {
 
                             <Input label={"Product price"}
                                    id={"price"}
-                                   name={"price"}
+                                   {...register("price")}
                                    type={"number"}
                                    required={true}
                                    autoComplete={"number"}
@@ -97,7 +100,7 @@ const Form = ({active, setActive, data}: {
                                 <div className="mt-2">
                                     <textarea
                                         id="description"
-                                        name="description"
+                                        {...register("description")}
                                         autoComplete="description"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                                     />
@@ -106,7 +109,7 @@ const Form = ({active, setActive, data}: {
 
                             <Input label={"Product category"}
                                    id={"category"}
-                                   name={"category"}
+                                   {...register("category")}
                                    type={"text"}
                                    autoComplete={"category"}
                                    inputClassName={"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"}
@@ -115,7 +118,7 @@ const Form = ({active, setActive, data}: {
 
                             <Input label={"Product rate"}
                                    id={"rate"}
-                                   name={"rate"}
+                                   {...register("rate")}
                                    type={"number"}
                                    autoComplete={"number"}
                                    inputClassName={"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"}
@@ -124,7 +127,7 @@ const Form = ({active, setActive, data}: {
 
                             <Input label={"Product count"}
                                    id={"count"}
-                                   name={"count"}
+                                   {...register("count")}
                                    type={"number"}
                                    autoComplete={"count"}
                                    inputClassName={"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"}
@@ -132,16 +135,10 @@ const Form = ({active, setActive, data}: {
                             />
 
                             <div>
-                                {/*<button*/}
-                                {/*    type="submit"*/}
-                                {/*    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"*/}
-                                {/*    onClick={closeModel}*/}
-                                {/*>*/}
-                                {/*    Save*/}
-                                {/*</button>*/}
                                 <Button title={'Save'}
+                                        type={"submit"}
                                         className={"flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"}
-                                        callBack={closeModel}></Button>
+                                        callBack={onSubmit}></Button>
                             </div>
                         </form>
                     </div>

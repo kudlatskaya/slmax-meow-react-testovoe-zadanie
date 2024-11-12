@@ -10,6 +10,7 @@ import ProductInfo from "@/app/components/product/ProductInfo";
 import PencilSquare from "@/assets/icons/Pencil_square";
 import s from '../../styles/Product.module.css'
 import Form from "@/app/components/form/Form";
+import {productsAPI} from "@/app/api/api";
 
 
 // Product это сущность, которая должна принимать не сам продукт, а только пропсы
@@ -19,9 +20,9 @@ import Form from "@/app/components/form/Form";
 const Product: React.FC<ProductType> = ( { product} : ProductType) => {
     const {title, description, price, image} = product
     const [modalActive, setModalActive] = useState(false);
+    const [data, setData] = useState<ProductType>(product)
     const router = useRouter()
-
-
+    console.log('Product')
 
     return (
         <>
@@ -42,7 +43,7 @@ const Product: React.FC<ProductType> = ( { product} : ProductType) => {
                         </div>
                     </div>
                 </div>
-                : <Form data={product} active={modalActive} setActive={setModalActive}/>
+                : <Form data={data} setData={setData}  active={modalActive} setActive={setModalActive}/>
             }
         </>
     );

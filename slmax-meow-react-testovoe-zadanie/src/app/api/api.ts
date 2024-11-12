@@ -11,10 +11,10 @@ export const productsAPI = {
   getProducts() {
     return fetch("https://fakestoreapi.com/products").then((res) => res.json());
   },
-  getProduct(productId: string) {
+  getProduct(productId: number) {
     return fetch(`https://fakestoreapi.com/products/${productId}`).then((res) => res.json());
   },
-  deleteProduct(productId: string) {
+  deleteProduct(productId: number) {
     return instance.delete<ProductType>(`products/${productId}`)
   },
   createProduct( model: ProductType) {
