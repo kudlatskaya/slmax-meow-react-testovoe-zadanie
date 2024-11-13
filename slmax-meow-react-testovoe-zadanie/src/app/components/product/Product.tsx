@@ -18,11 +18,11 @@ import {productsAPI} from "@/app/api/api";
 
 
 const Product: React.FC<ProductType> = ( { product} : ProductType) => {
-    const {title, description, price, image} = product
+
     const [modalActive, setModalActive] = useState(false);
     const [data, setData] = useState<ProductType>(product)
+    const {title, description, price, image} = data
     const router = useRouter()
-    console.log('Product')
 
     return (
         <>

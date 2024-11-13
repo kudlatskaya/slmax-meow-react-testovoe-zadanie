@@ -25,17 +25,20 @@ const Form = ({active, setActive, data, setData}: {
             rate: data.rating?.rate,
             count: data.rating?.count,
         },
-        resolver: zodResolver(loginSchema),
+        // resolver: zodResolver(loginSchema),
     });
-    console.log('Product')
+
     const closeModel = () => {
         setActive(false)
     }
 
-    const onSubmit = useCallback(async () => {
+    const onSubmit = useCallback(() => {
         const productData = getValues();
+        console.log(productData)
+
+        const res = productsAPI.updateProduct(data.id, productData)
         setData(productData)
-        // productsAPI.updateProduct(productData.id, productData)
+        console.log(res)
         // let product: ProductType = await productsAPI.getProduct(productData.id)
         setActive(false)
         // console.log(productData)
@@ -46,8 +49,6 @@ const Form = ({active, setActive, data, setData}: {
             {
                 active &&
 
-                <html className="h-full bg-white">
-                <body className="h-full">
                 <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
 
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -74,19 +75,20 @@ const Form = ({active, setActive, data, setData}: {
                                    labelClassName={"block text-sm/6 font-medium text-gray-900"}
                             />
 
-                            <Input label={"Product image"}
-                                   id={"file"}
-                                   {...register("image")}
-                                   type={"file"}
-                                   required={true}
-                                   inputClassName={"block w-full  py-1.5 text-gray-900   placeholder:text-gray-400  sm:text-sm/6"}
-                                   labelClassName={"block text-sm/6 font-medium text-gray-900"}
-                            />
+                            {/*<Input label={"Product image"}*/}
+                            {/*       id={"file"}*/}
+                            {/*       {...register("image")}*/}
+                            {/*       type={"file"}*/}
+                            {/*       required={true}*/}
+                            {/*       inputClassName={"block w-full  py-1.5 text-gray-900   placeholder:text-gray-400  sm:text-sm/6"}*/}
+                            {/*       labelClassName={"block text-sm/6 font-medium text-gray-900"}*/}
+                            {/*/>*/}
 
                             <Input label={"Product price"}
                                    id={"price"}
                                    {...register("price")}
                                    type={"number"}
+                                   step={'0.01'}
                                    required={true}
                                    autoComplete={"number"}
                                    inputClassName={"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"}
@@ -120,6 +122,7 @@ const Form = ({active, setActive, data, setData}: {
                                    id={"rate"}
                                    {...register("rate")}
                                    type={"number"}
+                                   step={'0.1'}
                                    autoComplete={"number"}
                                    inputClassName={"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"}
                                    labelClassName={"block text-sm/6 font-medium text-gray-900"}
@@ -138,14 +141,11 @@ const Form = ({active, setActive, data, setData}: {
                                 <Button title={'Save'}
                                         type={"submit"}
                                         className={"flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"}
-                                        callBack={onSubmit}></Button>
+                                        ></Button>
                             </div>
                         </form>
                     </div>
-
                 </div>
-                </body>
-                </html>
             }
         </>
     );

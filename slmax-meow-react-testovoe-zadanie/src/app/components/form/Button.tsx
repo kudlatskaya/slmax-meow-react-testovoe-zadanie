@@ -15,14 +15,12 @@ const Button = ({title, callBack, disabled, className, children, ...rest}: Props
         callBack();
     }
 
-
-
     return (
         <div >
             <button
                 type={rest.type}
                 className={title ? className : s.button}
-                onClick={onClickHandler}
+                onClick={rest.type!='submit' ? onClickHandler : null}
                 disabled={disabled}>{title || children}</button>
         </div>
     );

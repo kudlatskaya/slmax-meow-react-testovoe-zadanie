@@ -9,8 +9,6 @@ const PageProduct: ({params: {id}}: { params: { id: number } }) => Promise<JSX.E
     params: { id: number };
 }) => {
 
-
-
      let product: ProductType = await productsAPI.getProduct(id)
 
 
@@ -20,7 +18,7 @@ const PageProduct: ({params: {id}}: { params: { id: number } }) => Promise<JSX.E
     //     product = await productsAPI.getProduct(data.id)
     // }
 
-    console.log('PageProduct')
+
     if (!product) {
         return <div>Загрузка...</div>;
     }
