@@ -1,6 +1,6 @@
 import axios from 'axios'
 //import {GetProductsResponse} from "@/app/api/types";
-import { ProductType} from "@/types";
+import {ProductType, UpdateProductType} from "@/types";
 
 const instance = axios.create({
   baseURL: 'https://fakestoreapi.com/',
@@ -28,3 +28,4 @@ export const productsAPI = {
         .then(res=>res.json())
   },
 }
+

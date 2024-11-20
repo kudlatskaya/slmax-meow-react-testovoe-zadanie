@@ -2,6 +2,15 @@ import {ProductType} from "@/types";
 import Product from "@/app/components/product/Product";
 import {productsAPI} from "@/app/api/api";
 import {useEffect, useState} from "react";
+import {getProducts} from "@/app/page";
+
+// export const generateStaticParams = async () => {
+//     const products: ProductType[] = await getProducts();
+//
+//     return products.map((el) => ({
+//         slug: el.id
+//     }));
+// };
 
 const PageProduct: ({params: {id}}: { params: { id: number } }) => Promise<JSX.Element> = async ({
   params: {id},

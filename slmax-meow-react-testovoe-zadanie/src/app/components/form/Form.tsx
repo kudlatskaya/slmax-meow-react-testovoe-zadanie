@@ -7,6 +7,7 @@ import {useForm} from "react-hook-form";
 import {FormValues, loginSchema} from "./validation"
 import {ProductType} from "@/types";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {log} from "node:util";
 
 const Form = ({active, setActive, data, setData}: {
     active: boolean,
@@ -34,11 +35,11 @@ const Form = ({active, setActive, data, setData}: {
 
     const onSubmit = useCallback(() => {
         const productData = getValues();
-        console.log(productData)
+        // console.log(productData)
 
         const res = productsAPI.updateProduct(data.id, productData)
         setData(productData)
-        console.log(res)
+        res.then((data) => console.log(data))
         // let product: ProductType = await productsAPI.getProduct(productData.id)
         setActive(false)
         // console.log(productData)
